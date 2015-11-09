@@ -67,10 +67,10 @@ Each word from the input file will be a separate element in the array.
 let delimiters = NSCharacterSet(charactersInString: ", \n")
 
 // Break the string up into an array using delimiters created above
-let words = content.componentsSeparatedByCharactersInSet(delimiters)
+let input = content.componentsSeparatedByCharactersInSet(delimiters)
 
 // Review the contents of the array (click the + button in the sidebar to show the result)
-words
+input.count
 /*:
 
 Now you have the entire contents of your text file, separated into individual words, and stored in a regular array.
@@ -111,7 +111,8 @@ Goal #1
 
 My algorithm
 ------------
-
+ 1 loop over input dictionary and make a word count dictionary.
+2 figure out probabillities from the 
 
 My assumptions
 --------------
@@ -124,8 +125,56 @@ Probable data structures
 */
 
 // Implement Goal #1 below...
+var words = input.sort()
+words
+
+var sentence = ""
+var wordCounts = [String: Int]()
+var wordProbs = [String: Float]()
+var Inlength = words.count
+
+for word in words {
+    if wordCounts[word] == nil {
+        wordCounts[word] = 1
+    }
+    else {
+        wordCounts[word]! += 1
+    }
+    
+}
+wordCounts
+
+for (word, counts) in wordCounts {
+    wordProbs[word] = Float(counts) / Float(Inlength) * 100
+}
+
+wordProbs
 
 
+
+var Finaloutput = [Int: String]()
+for _ in 1...30 {
+    
+    let newRandom = arc4random_uniform(100000)
+    let newRandomValue = Float(newRandom) / 1000
+    var upperValue: Float = 0
+    var sentenceL = 0
+    
+    for (word, probs) in wordProbs {
+        upperValue += probs
+        
+        if (newRandomValue < upperValue) {
+            Finaloutput[sentenceL] += word
+            
+            // stop scanning probabilities (we found the one that matches)
+            // execution of code will continue with next iteration of outer "for" loop from 1 to 30
+            break
+        }
+        sentenceL += 1
+    }
+    
+    
+}
 
 /*: 
 
