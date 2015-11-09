@@ -152,29 +152,28 @@ wordProbs
 
 
 
-var Finaloutput = [Int: String]()
-for _ in 1...30 {
+var Finaloutput = ""
+while (Finaloutput.characters.last != ".") {
     
     let newRandom = arc4random_uniform(100000)
     let newRandomValue = Float(newRandom) / 1000
     var upperValue: Float = 0
-    var sentenceL = 0
     
     for (word, probs) in wordProbs {
         upperValue += probs
         
         if (newRandomValue < upperValue) {
-            Finaloutput[sentenceL] += word
+            Finaloutput += " "
+            Finaloutput += String(word)
             
             // stop scanning probabilities (we found the one that matches)
             // execution of code will continue with next iteration of outer "for" loop from 1 to 30
             break
         }
-        sentenceL += 1
     }
-    
-    
 }
+
+Finaloutput
 
 /*: 
 
